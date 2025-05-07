@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap");
+@import "./styles/colors.css";
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-dark-800) var(--bg-primary);
+}
+
+html,
+body,
+:root {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+code,
+.font-mono {
+  font-family: "Fira Code", monospace;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-dark-800);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.theme-transition {
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-switch {
+  width: 50px;
+  height: 24px;
+  background-color: var(--color-dark-800);
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  padding: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.theme-switch.vertical {
+  width: 24px;
+  height: 50px;
+  flex-direction: column;
+  border-radius: 12px;
+}
+
+.theme-switch[data-is-on="false"] {
+  background-color: var(--color-light-300);
+  justify-content: flex-start;
+}
+
+.theme-switch[data-is-on="true"] {
+  background-color: var(--color-dark-800);
+  justify-content: flex-end;
+}
+
+.theme-switch.vertical[data-is-on="false"] {
+  justify-content: flex-start;
+}
+
+.theme-switch.vertical[data-is-on="true"] {
+  justify-content: flex-end;
+}
+
+.theme-ball {
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-light-100);
+  border-radius: 50%;
+  will-change: transform;
+}
