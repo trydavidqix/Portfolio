@@ -6,14 +6,11 @@ import { FaReact } from "react-icons/fa";
 import { FaFigma } from "react-icons/fa";
 import { TbBrandFramerMotion } from "react-icons/tb";
 
-
 import { FaGitAlt } from "react-icons/fa";
 
 import { FaGithub } from "react-icons/fa";
 
 import { SiVite } from "react-icons/si";
-
-import { useTheme } from "../hooks/useTheme";
 
 const technologies = [
   {
@@ -65,7 +62,9 @@ const technologies = [
   },
   {
     name: "Framer Motion",
-    icon: <TbBrandFramerMotion className="text-[var(--color-accent)] text-xl" />,
+    icon: (
+      <TbBrandFramerMotion className="text-[var(--color-accent)] text-xl" />
+    ),
     useReactIcon: true,
     iconSrc: undefined,
   },
@@ -83,8 +82,6 @@ const TechItem = memo(
     icon?: React.ReactNode;
     useReactIcon?: boolean;
   }) => {
-    const { theme } = useTheme();
-
     return (
       <li className="flex items-center">
         {useReactIcon ? (
@@ -125,9 +122,10 @@ const About = () => {
             </p>
             <p>
               Atualmente, estou aprofundando meus conhecimentos em{" "}
-              <strong>React</strong>, <strong>TypeScript</strong>, <strong>TailwindCSS</strong> e ferramentas
-              modernas do ecossistema, colocando tudo em prática em projetos que
-              me desafiam e me fazem evoluir constantemente.
+              <strong>React</strong>, <strong>TypeScript</strong>,{" "}
+              <strong>TailwindCSS</strong> e ferramentas modernas do
+              ecossistema, colocando tudo em prática em projetos que me desafiam
+              e me fazem evoluir constantemente.
             </p>
             <p>
               Aqui estão algumas tecnologias com as quais tenho trabalhado

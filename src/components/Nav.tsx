@@ -66,14 +66,11 @@ const Nav: React.FC<NavProps> = ({
     [onItemClick]
   );
 
-  const handleItemClick = useCallback(
-    (e: React.MouseEvent) => {
-      if (onItemClick) {
-        onItemClick();
-      }
-    },
-    [onItemClick]
-  );
+  const handleItemClick = useCallback(() => {
+    if (onItemClick) {
+      onItemClick();
+    }
+  }, [onItemClick]);
 
   const resumeLink = "/David Macêdo - Currículo.pdf";
 

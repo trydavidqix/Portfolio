@@ -93,15 +93,15 @@ const Hero = memo(() => (
       <br className="sm:hidden" /> para a web.
     </h2>
     <p className="text-[var(--color-medium-500)] max-w-lg mb-12 text-lg">
-      Eu sou o dev que cai, sangra, levanta… e compila de novo. Sou front-end
-      como o Peter Parker é o Homem-Aranha: responsivo, rápido e com
-      responsabilidade no código. Carrego o peso de cada erro como o Joel
-      carrega a Ellie — sempre com propósito. Como Naruto, vim de baixo,
-      desacreditaram... mas tô aqui, virando referência. Código pra mim é
-      batalha, e cada deploy é uma arena. Se o bug aparece, viro Batman no modo
-      detetive. No fim, eu construo mais que interfaces — eu crio experiências
-      que tocam, transformam e resistem ao tempo. Porque nessa guerra digital,
-      ser bom não basta. Tem que ser invencível.
+      <p>Eu sou o dev que cai, sangra, levanta… e compila de novo.</p> 
+      <p>Sou front-end como o Peter Parker é o Homem-Aranha: responsivo, rápido e com responsabilidade no código.</p> 
+      <p>Carrego o peso de cada erro como o Joel carrega a Ellie — sempre com propósito.</p> 
+      <p>Como Naruto, vim de baixo, desacreditaram... mas tô aqui, virando referência. Código pra mim é batalha, e cada deploy é uma arena. </p>
+      <p>Se o bug aparece, viro Batman no modo detetive.</p> 
+      <p>
+        No fim, eu construo mais que interfaces — eu crio experiências que tocam, transformam e resistem ao tempo.
+        Porque nessa guerra digital, ser bom não basta. Tem que ser invencível.
+      </p>
     </p>
     <div>
       <a
