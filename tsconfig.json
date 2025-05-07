@@ -6,11 +6,9 @@
     "module": "ESNext",
     "skipLibCheck": true,
     
-    /* Rastreamento de build para melhor performance */
     "incremental": true,
     "tsBuildInfoFile": "./node_modules/.tsbuildinfo",
     
-    /* Paths e resolução de módulos */
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
@@ -19,7 +17,6 @@
       "@styles/*": ["src/styles/*"]
     },
     
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -27,7 +24,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     
-    /* Linting aprimorado */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

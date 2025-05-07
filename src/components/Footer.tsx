@@ -13,10 +13,6 @@ const SocialIcons = memo(() => (
       <LordIcon
         src="https://cdn.lordicon.com/jjxzcivr.json"
         trigger="loop"
-        colors={{
-          primary: "#0a192f",
-          secondary: "##6495EE",
-        }}
         size={50}
       />
     </a>
@@ -30,10 +26,6 @@ const SocialIcons = memo(() => (
       <LordIcon
         src="https://cdn.lordicon.com/qgebwute.json"
         trigger="loop"
-        colors={{
-          primary: "#0a192f",
-          secondary: "#ccd6f6",
-        }}
         size={50}
       />
     </a>
@@ -45,10 +37,6 @@ const SocialIcons = memo(() => (
       <LordIcon
         src="https://cdn.lordicon.com/diihvcfp.json"
         trigger="loop"
-        colors={{
-          primary: "#0a192f",
-          secondary: "#ccd6f6",
-        }}
         size={50}
       />
     </a>

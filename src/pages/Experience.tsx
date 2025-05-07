@@ -12,7 +12,7 @@ interface ExperienceData {
 const experiencesData: ExperienceData[] = [
   {
     company: "Terrapixel",
-    url: "https://terrapixel.com",
+    url: "https://terrapixel.com.br/",
     role: "Desenvolvedor Front-End",
     period: "2022 - Atual",
     description: [

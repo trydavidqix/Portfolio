@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, memo } from "react";
+import React, { useState, useEffect, useMemo, memo, useCallback } from "react";
 
 interface NavProps {
   className?: string;
@@ -13,7 +13,6 @@ const Nav: React.FC<NavProps> = ({
 }) => {
   const [activeSection, setActiveSection] = useState("about");
 
-  // Usando useMemo para evitar que o array seja recriado a cada renderização
   const navItems = useMemo(
     () => [
       { name: "Sobre", section: "about" },
@@ -28,7 +27,6 @@ const Nav: React.FC<NavProps> = ({
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
 
-      // Usando o array pré-calculado
       for (const item of navItems) {
         const element = document.getElementById(item.section);
         if (element) {
@@ -42,7 +40,6 @@ const Nav: React.FC<NavProps> = ({
       }
     };
 
-    // Usando throttle para limitar a frequência de eventos de scroll
     let ticking = false;
     const onScroll = () => {
       if (!ticking) {
@@ -58,26 +55,53 @@ const Nav: React.FC<NavProps> = ({
     return () => window.removeEventListener("scroll", onScroll);
   }, [navItems]);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent, href: string) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        window.location.href = href;
+        onItemClick?.();
+      }
+    },
+    [onItemClick]
+  );
+
+  const handleItemClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (onItemClick) {
+        onItemClick();
+      }
+    },
+    [onItemClick]
+  );
+
   const resumeLink = "/David Macêdo - Currículo.pdf";
 
-  // Adicionando classes condicionais baseadas na prop isMobile
   const navContainerClasses = `flex flex-col items-end space-y-8 ${
     isMobile ? "w-full" : ""
   }`;
 
   return (
-    <nav className={className}>
-      <div className={navContainerClasses}>
+    <nav className={className} aria-label="Navegação principal">
+      <div
+        className={navContainerClasses}
+        role="menubar"
+        aria-orientation="vertical"
+      >
         {navItems.map((item) => (
           <a
             key={item.section}
             href={`#${item.section}`}
-            onClick={onItemClick}
-            className={`py-2 px-1 text-sm font-mono transition-colors duration-300 ${
+            onClick={handleItemClick}
+            onKeyDown={(e) => handleKeyDown(e, `#${item.section}`)}
+            className={`py-2 px-1 text-sm font-mono transition-colors duration-300 outline-offset-4 focus:outline-[var(--color-accent)] focus:bg-[var(--color-accent-transparent)] ${
               activeSection === item.section
                 ? "text-[var(--color-accent)]"
                 : "text-[var(--color-light-100)] hover:text-[var(--color-accent)]"
             }`}
+            aria-current={activeSection === item.section ? "page" : undefined}
+            role="menuitem"
+            tabIndex={0}
           >
             {item.name}
           </a>
@@ -86,8 +110,12 @@ const Nav: React.FC<NavProps> = ({
           href={resumeLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="border border-[var(--color-accent)] text-[var(--color-accent)] rounded px-4 py-2 text-sm font-mono hover:bg-[var(--color-accent-transparent)] transition-colors duration-300"
-          onClick={onItemClick}
+          className="border border-[var(--color-accent)] text-[var(--color-accent)] rounded px-4 py-2 text-sm font-mono hover:bg-[var(--color-accent-transparent)] transition-colors duration-300 focus:outline-[var(--color-accent)] focus:bg-[var(--color-accent-transparent)] outline-offset-2"
+          onClick={handleItemClick}
+          onKeyDown={(e) => handleKeyDown(e, resumeLink)}
+          aria-label="Abrir currículo em PDF (abre em uma nova aba)"
+          role="menuitem"
+          tabIndex={0}
         >
           Currículo
         </a>
@@ -96,5 +124,4 @@ const Nav: React.FC<NavProps> = ({
   );
 };
 
-// Memorizando o componente para evitar rerenderizações desnecessárias
 export default memo(Nav);

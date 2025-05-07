@@ -3,23 +3,23 @@ import LordIcon from "../components/LordIcon";
 
 const featuredProjects = [
   {
-    title: "Clone do Orkut",
+    title: "Futuramente",
     description:
-      "Uma recriação moderna do clássico Orkut com funcionalidades atuais. Inclui autenticação de usuários, perfis personalizáveis, comunidades e modo escuro. Interface responsiva que funciona em todos os dispositivos.",
-    tech: ["React", "TypeScript", "TailwindCSS", "Firebase", "NextAuth"],
-    github: "https://github.com/trydavidqix/orkut-clone",
-    external: "https://orkut-clone.vercel.app",
-    image: "/images/projeto-orkut.jpg",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+    tech: ["React", "TypeScript", "TailwindCSS"],
+    github: "https://github.com/trydavidqix",
+    external: "#",
+    image: "#",
     fallbackColor: "#112240",
   },
   {
-    title: "Gerador de Currículos com IA",
+    title: "Futuramente",
     description:
-      "Aplicação que utiliza inteligência artificial para criar currículos personalizados baseados no perfil do usuário e na vaga desejada. Otimiza automaticamente palavras-chave e formata o currículo para maior sucesso nas candidaturas.",
-    tech: ["Next.js", "OpenAI API", "TailwindCSS", "React Hook Form", "Prisma"],
-    github: "https://github.com/trydavidqix/ai-curriculo",
-    external: "https://curriculoai.vercel.app",
-    image: "/images/projeto-curriculo.jpg",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+    tech: ["React", "TypeScript", "TailwindCSS"],
+    github: "https://github.com/trydavidqix",
+    external: "#",
+    image: "#",
     fallbackColor: "#112240",
   },
 ];
@@ -61,24 +61,26 @@ const Projects = () => {
                     i % 2 === 0 ? "md:col-start-6" : "md:col-start-1"
                   } relative z-10`}
                 >
-                  <a
-                    href={project.external}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full h-full group"
-                  >
-                    <div className="relative rounded overflow-hidden transition-all bg-[var(--color-accent)] hover:bg-transparent min-h-[200px]">
-                      <div className="absolute inset-0 bg-[var(--bg-primary)] opacity-80 group-hover:opacity-50 transition-opacity z-10"></div>
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full object-cover transition-all z-0"
-                        onError={handleImageError}
-                        data-index={i}
-                        loading="lazy"
-                      />
+                  <div className="block w-full h-full">
+                    <div className="relative rounded overflow-hidden transition-all bg-[var(--color-accent)] min-h-[200px]">
+                      <div className="absolute inset-0 bg-[var(--bg-primary)] opacity-80 transition-opacity z-10"></div>
+                      <picture>
+                        <source
+                          srcSet={`${project.image.replace(".jpg", ".webp")}`}
+                          type="image/webp"
+                        />
+                        <source srcSet={project.image} type="image/jpeg" />
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full object-cover transition-all z-0"
+                          onError={handleImageError}
+                          data-index={i}
+                          loading="lazy"
+                        />
+                      </picture>
                     </div>
-                  </a>
+                  </div>
                 </div>
 
                 <div
@@ -134,10 +136,6 @@ const Projects = () => {
                         <LordIcon
                           src="https://cdn.lordicon.com/jjxzcivr.json"
                           trigger="loop"
-                          colors={{
-                            primary: "#0a192f",
-                            secondary: "#ccd6f6",
-                          }}
                           size={50}
                         />
                       </a>
@@ -151,10 +149,6 @@ const Projects = () => {
                         <LordIcon
                           src="https://cdn.lordicon.com/gsjfryhc.json"
                           trigger="loop"
-                          colors={{
-                            primary: "#0a192f",
-                            secondary: "#ccd6f6",
-                          }}
                           size={50}
                         />
                       </a>

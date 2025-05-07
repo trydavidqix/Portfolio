@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, memo } from "react";
+import { useTheme } from "../hooks/useTheme";
 
 interface LordIconProps {
   src: string;
@@ -21,28 +22,41 @@ interface LordIconProps {
 const LordIcon: React.FC<LordIconProps> = ({
   src,
   trigger = "hover",
-  colors = { primary: "#121331", secondary: "#0a0e27" },
+  colors,
   size = 32,
   delay = 0,
   className = "",
 }) => {
   const iconRef = useRef<HTMLElement>(null);
+  const { theme } = useTheme();
+
+  const defaultColors = {
+    primary: theme === "dark" ? "#000000" : "#97A4BD",
+    secondary: theme === "dark" ? "#121212" : "#97A4BD",
+  };
+
+  const finalColors = colors || defaultColors;
 
   useEffect(() => {
     if (iconRef.current) {
-      // Criando um string de cores para evitar múltiplas definições de atributo
-      const colorString = colors.secondary
-        ? `primary:${colors.primary},secondary:${colors.secondary}`
-        : `primary:${colors.primary}`;
+      const themeColors = {
+        primary: theme === "dark" ? "#000000" : "#97A4BD",
+        secondary: theme === "dark" ? "#121212" : "#97A4BD",
+      };
 
-      // Definindo os atributos de uma só vez
+      const iconColors = colors || themeColors;
+
+      const colorString = iconColors.secondary
+        ? `primary:${iconColors.primary},secondary:${iconColors.secondary}`
+        : `primary:${iconColors.primary}`;
+
       iconRef.current.setAttribute("colors", colorString);
 
       if (delay) {
         iconRef.current.setAttribute("delay", delay.toString());
       }
     }
-  }, [colors.primary, colors.secondary, delay]); // Dependências específicas
+  }, [finalColors.primary, finalColors.secondary, delay, theme, colors]);
 
   return (
     <lord-icon
@@ -55,5 +69,4 @@ const LordIcon: React.FC<LordIconProps> = ({
   );
 };
 
-// Memorizando o componente para evitar rerenderizações desnecessárias
 export default memo(LordIcon);

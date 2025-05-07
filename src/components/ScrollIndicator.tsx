@@ -4,7 +4,6 @@ import { memo } from "react";
 const ScrollIndicator = () => {
   const { scrollYProgress } = useScroll();
 
-  // Otimizando as configurações do spring para melhor performance
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 80,
     damping: 25,
@@ -33,5 +32,4 @@ const ScrollIndicator = () => {
   );
 };
 
-// Memorizando o componente para evitar rerenderizações desnecessárias
 export default memo(ScrollIndicator);

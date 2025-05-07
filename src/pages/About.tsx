@@ -3,6 +3,17 @@ import LordIcon from "../components/LordIcon";
 import { IoLogoJavascript } from "react-icons/io5";
 import { SiTypescript, SiTailwindcss } from "react-icons/si";
 import { FaReact } from "react-icons/fa";
+import { FaFigma } from "react-icons/fa";
+import { TbBrandFramerMotion } from "react-icons/tb";
+
+
+import { FaGitAlt } from "react-icons/fa";
+
+import { FaGithub } from "react-icons/fa";
+
+import { SiVite } from "react-icons/si";
+
+import { useTheme } from "../hooks/useTheme";
 
 const technologies = [
   {
@@ -29,6 +40,35 @@ const technologies = [
     useReactIcon: true,
     iconSrc: undefined,
   },
+  {
+    name: "Vite",
+    icon: <SiVite className="text-[var(--color-accent)] text-xl" />,
+    useReactIcon: true,
+    iconSrc: undefined,
+  },
+  {
+    name: "Git & GitHub",
+    icon: (
+      <div className="flex items-center gap-2 text-[var(--color-accent)] text-xl">
+        <FaGitAlt />
+        <FaGithub />
+      </div>
+    ),
+    useReactIcon: true,
+    iconSrc: undefined,
+  },
+  {
+    name: "Figma",
+    icon: <FaFigma className="text-[var(--color-accent)] text-xl" />,
+    useReactIcon: true,
+    iconSrc: undefined,
+  },
+  {
+    name: "Framer Motion",
+    icon: <TbBrandFramerMotion className="text-[var(--color-accent)] text-xl" />,
+    useReactIcon: true,
+    iconSrc: undefined,
+  },
 ];
 
 const TechItem = memo(
@@ -42,25 +82,20 @@ const TechItem = memo(
     iconSrc?: string;
     icon?: React.ReactNode;
     useReactIcon?: boolean;
-  }) => (
-    <li className="flex items-center">
-      {useReactIcon ? (
-        <span className="mr-2">{icon}</span>
-      ) : (
-        <LordIcon
-          src={iconSrc!}
-          trigger="hover"
-          colors={{
-            primary: "var(--color-accent)",
-            secondary: "var(--color-accent)",
-          }}
-          size={20}
-          className="mr-2"
-        />
-      )}
-      <span>{name}</span>
-    </li>
-  )
+  }) => {
+    const { theme } = useTheme();
+
+    return (
+      <li className="flex items-center">
+        {useReactIcon ? (
+          <span className="mr-2">{icon}</span>
+        ) : (
+          <LordIcon src={iconSrc!} trigger="hover" size={20} className="mr-2" />
+        )}
+        <span>{name}</span>
+      </li>
+    );
+  }
 );
 
 const About = () => {
@@ -76,28 +111,28 @@ const About = () => {
           </div>
 
           <div className="text-[var(--color-medium-600)] space-y-4 leading-relaxed overflow-x-hidden">
-            <p className="break-words">
-              Olá! Me chamo David e adoro criar coisas para a web. Meu interesse
-              por desenvolvimento web começou em 2020 quando decidi fazer uma
-              transição de carreira e mergulhar no mundo da programação.
+            <p>
+              Olá! Me chamo David e sou apaixonado por criar experiências
+              digitais na web. Minha jornada como desenvolvedor começou em 2020,
+              quando decidi mudar de carreira e mergulhar de cabeça no mundo da
+              programação.
             </p>
-            <p className="break-words">
-              Desde então, tenho me dedicado a aprender e aprimorar minhas
-              habilidades como desenvolvedor front-end. Tenho focado em
-              construir produtos digitais acessíveis e centrados no usuário,
-              sempre buscando as melhores práticas e tecnologias mais modernas.
+            <p>
+              Desde então, venho me dedicando intensamente ao front-end,
+              buscando construir interfaces acessíveis, responsivas e focadas na
+              experiência do usuário. Sempre estou explorando boas práticas,
+              novos padrões e tecnologias que realmente fazem diferença.
             </p>
-            <p className="break-words">
-              Atualmente, estou expandindo meus conhecimentos em React,
-              TypeScript e outras tecnologias modernas, enquanto trabalho em
-              projetos pessoais para aplicar esses conhecimentos na prática.
+            <p>
+              Atualmente, estou aprofundando meus conhecimentos em{" "}
+              <strong>React</strong>, <strong>TypeScript</strong>, <strong>TailwindCSS</strong> e ferramentas
+              modernas do ecossistema, colocando tudo em prática em projetos que
+              me desafiam e me fazem evoluir constantemente.
             </p>
-
-            <p className="break-words">
+            <p>
               Aqui estão algumas tecnologias com as quais tenho trabalhado
               recentemente:
             </p>
-
             <ul className="grid grid-cols-2 gap-x-2 gap-y-3 max-w-md font-mono text-xs break-words">
               {technologies.map((tech, index) => (
                 <TechItem
