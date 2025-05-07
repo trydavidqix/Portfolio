@@ -3,11 +3,11 @@ import react from '@vitejs/plugin-react-swc'
 import { resolve } from 'path'
 
 export default defineConfig({
+  base: "/Portfolio/",
   plugins: [
     react({
       plugins: [],
       jsxImportSource: 'react',
-      base: "/Portfolio",
     })
   ],
   resolve: {
