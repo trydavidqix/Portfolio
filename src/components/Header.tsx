@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 import Nav from "./Nav";
-import { useTheme } from "../hooks/useTheme";
 
 const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
