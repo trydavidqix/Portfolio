@@ -7,6 +7,7 @@ export default defineConfig({
     react({
       plugins: [],
       jsxImportSource: 'react',
+      base: "/Portfolio",
     })
   ],
   resolve: {
