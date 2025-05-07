@@ -15,6 +15,7 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 ## 💻 Projeto
 
 O portfólio foi construído para apresentar meus projetos e habilidades de forma profissional e atraente. Possui:
+
 - Tema claro/escuro
 - Design responsivo
 - Seções para projetos, experiências, contato e sobre mim
@@ -22,10 +23,15 @@ O portfólio foi construído para apresentar meus projetos e habilidades de form
 ## 📁 Estrutura do Projeto
 
 - `/src` - Código fonte principal
+
   - `/components` - Componentes reutilizáveis (Header, Footer, etc)
+
   - `/context` - Context API para gerenciamento de estado
+
   - `/hooks` - Hooks personalizados
+
   - `/pages` - Páginas do portfólio
+
   - `/styles` - Arquivos de estilo
 
 ## 🔧 Configuração
@@ -33,6 +39,7 @@ O portfólio foi construído para apresentar meus projetos e habilidades de form
 ### Pré-requisitos
 
 - Node.js
+
 - npm ou yarn
 
 ### Instalação
