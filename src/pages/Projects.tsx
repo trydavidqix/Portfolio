@@ -40,7 +40,7 @@ const Projects = () => {
     Array(featuredProjects.length).fill(0)
   );
   // Para controlar o autoplay do carrossel
-  const [autoplay, setAutoplay] = useState(true);
+  const [autoplay] = useState(true);
 
   // Efeito para mudar automaticamente as imagens a cada 3 segundos
   React.useEffect(() => {
@@ -85,19 +85,7 @@ const Projects = () => {
       return newIndexes;
     });
   };
-
-  // Função para trocar imagem (anterior)
-  const prevImage = (projectIndex: number) => {
-    setCurrentImageIndex((prev) => {
-      const newIndexes = [...prev];
-      newIndexes[projectIndex] =
-        (newIndexes[projectIndex] -
-          1 +
-          featuredProjects[projectIndex].images.length) %
-        featuredProjects[projectIndex].images.length;
-      return newIndexes;
-    });
-  };
+  // Função para trocar imagem (anterior) - removida pois não está sendo utilizada
 
   return (
     <section id="projects" className="py-24 lg:py-32">
