@@ -108,3 +108,25 @@ code,
   border-radius: 50%;
   will-change: transform;
 }
+
+/* Otimizações para os containers de imagens */
+.image-container {
+  contain: content;
+  transition: all 0.3s ease;
+}
+
+.image-container img {
+  will-change: transform;
+}
+
+
+/* Otimizações para os containers de imagens */
+.image-container {
+  contain: content;
+  transition: all 0.3s ease;
+}
+
+.image-container img {
+  will-change: transform;
+}
+

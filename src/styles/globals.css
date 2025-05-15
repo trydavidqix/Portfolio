@@ -121,21 +121,34 @@ const Projects = () => {
                     i % 2 === 0 ? "md:col-start-6" : "md:col-start-1"
                   } relative z-10`}
                 >
-                  {/* Apenas a imagem sem container */}
-                  <img
-                    src={project.images[currentImageIndex[i]]}
-                    alt={`${project.title} imagem ${currentImageIndex[i] + 1}`}
-                    className="w-auto h-auto object-contain rounded mx-auto block"
+                  {/* Container de imagem simplificado - sem div extra */}{" "}
+                  <div
+                    className="image-container relative rounded overflow-hidden flex justify-center items-center"
                     style={{
-                      maxHeight: "500px",
-                      maxWidth: "100%",
-                      borderRadius: "8px",
-                      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                      maxWidth: "800px",
+                      margin: "0 auto",
+                      backgroundColor: "#2D3139",
                     }}
-                    onError={handleImageError}
-                    data-project-index={i}
-                    loading="lazy"
-                  />
+                  >
+                    <div className="absolute inset-0 bg-[var(--bg-primary)] opacity-30 z-10"></div>{" "}
+                    <img
+                      src={project.images[currentImageIndex[i]]}
+                      alt={`${project.title} imagem ${
+                        currentImageIndex[i] + 1
+                      }`}
+                      className="w-auto h-auto object-contain z-0 p-2"
+                      style={{
+                        maxHeight: "500px",
+                        maxWidth: "100%",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                      }}
+                      onError={handleImageError}
+                      data-project-index={i}
+                      loading="lazy"
+                    />{" "}
+                    {/* Autoplay sem controles visuais */}
+                  </div>
                 </div>
 
                 <div
@@ -148,15 +161,24 @@ const Projects = () => {
                   <div>
                     <p className="text-[var(--color-accent)] font-mono text-xs mb-1">
                       Projeto em destaque
-                    </p>{" "}
+                    </p>
                     <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-light-100)] mb-5 break-words">
-                      {project.title}
+                      <a
+                        href={project.external}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[var(--color-accent)] transition-colors"
+                      >
+                        {project.title}
+                      </a>
                     </h3>
+
                     <div className="bg-[var(--color-dark-950)] p-4 sm:p-6 rounded text-[var(--color-medium-500)] shadow-xl mb-5 relative z-20 overflow-hidden break-words">
                       <p className="text-sm sm:text-base">
                         {project.description}
                       </p>
                     </div>
+
                     <ul
                       className={`flex flex-wrap gap-x-4 gap-y-2 mb-6 text-xs font-mono text-[var(--color-medium-500)] ${
                         i % 2 === 0 ? "md:justify-end" : "justify-start"
@@ -166,6 +188,7 @@ const Projects = () => {
                         <li key={j}>{tech}</li>
                       ))}
                     </ul>
+
                     <div
                       className={`flex text-[var(--color-light-100)] gap-5 ${
                         i % 2 === 0 ? "md:justify-end" : "justify-start"
