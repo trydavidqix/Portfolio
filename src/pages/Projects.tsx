@@ -32,6 +32,21 @@ const featuredProjects = [
     ],
     fallbackColor: "#f5f3ef",
   },
+  {
+    title: "TurboGainz",
+    description:
+      "Loja virtual responsiva e moderna focada em hormônios e produtos hardcore para crescimento muscular. Desenvolvido com React, TypeScript e TailwindCSS, entrega performance, design afiado e experiência de usuário de alto nível. Inclui busca, carrinho com persistência, simulação de login e checkout, e arquitetura preparada pra escalar.",
+    tech: ["React", "TypeScript", "TailwindCSS"],
+    github: "https://github.com/trydavidqix/TurboGainz",
+    external: "https://trydavidqix.github.io/TurboGainz/",
+    images: [
+      "images/TurboGainz/1.png", // Página inicial com história
+      "images/TurboGainz/2.png", // Página de produtos
+      "images/TurboGainz/3.png", // Seção de depoimentos
+      "images/TurboGainz/4.png", // Página de contato
+    ],
+    fallbackColor: "#f5f3ef",
+  },
 ];
 
 const Projects = () => {
