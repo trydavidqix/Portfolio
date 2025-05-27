@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import LordIcon from "./LordIcon";
 
 // Componente para os ícones de redes sociais

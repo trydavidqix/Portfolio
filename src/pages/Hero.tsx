@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import LordIcon from "../components/LordIcon";
 
 const SocialSidebar = memo(() => (
@@ -71,12 +71,11 @@ const EmailSidebar = memo(() => (
 const Hero = memo(() => (
   <section className="h-screen flex flex-col justify-center hero-section animate-fade-in">
     <h1 className="text-5xl sm:text-7xl font-bold mb-4">
-      <a
-        href="#about"
+      <span
         className="font-mono text-[var(--color-accent)] text-xl tracking-wider"
       >
         &lt; D.a.v.i.d/ &gt;
-      </a>
+      </span>
     </h1>
     <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-[var(--color-medium-600)] mb-6 leading-tight">
       Eu construo
@@ -105,12 +104,9 @@ const Hero = memo(() => (
       </p>
     </p>
     <div>
-      <a
-        href="#projects"
-        className="inline-block py-4 px-7 border border-[var(--color-accent)] text-[var(--color-accent)] font-mono rounded hover:bg-[var(--color-accent-transparent)] transition-colors duration-300"
-      >
+      <span className="inline-block py-4 px-7 border border-[var(--color-accent)] text-[var(--color-accent)] font-mono rounded hover:bg-[var(--color-accent-transparent)] transition-colors duration-300">
         Veja meus projetos
-      </a>
+      </span>
     </div>
   </section>
 ));
