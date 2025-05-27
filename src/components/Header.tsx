@@ -37,7 +37,13 @@ const Header: React.FC = () => {
     };
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
+      const newIsMobile = window.innerWidth < 1024;
+      setIsMobile(newIsMobile);
+      
+      // Fecha o menu mobile se a tela ficar grande
+      if (!newIsMobile && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
     };
 
     handleResize();
@@ -60,24 +66,37 @@ const Header: React.FC = () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, [navItems]);
+  }, [navItems, isMenuOpen]);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
-  
-  const handleNavClick = (href: string) => {
-    if (href.startsWith('#')) {
+  // Previne scroll do body quando menu mobile está aberto
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  const toggleMenu = useCallback(() => setIsMenuOpen(!isMenuOpen), [isMenuOpen]);
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
+
+  const handleNavClick = useCallback((href: string) => {
+    if (href.startsWith("#")) {
       // Para links internos (âncoras)
       const element = document.getElementById(href.substring(1));
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
       // Para links externos
       window.open(href, "_blank", "noopener,noreferrer");
     }
     closeMenu();
-  };
+  }, [closeMenu]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent, href: string) => {
@@ -86,16 +105,30 @@ const Header: React.FC = () => {
         handleNavClick(href);
       }
     },
-    [closeMenu]
+    [handleNavClick]
   );
+
+  // Fecha menu ao pressionar Escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMenuOpen) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isMenuOpen, closeMenu]);
 
   const resumeLink = "/Portfolio/David-Macedo-Curriculo.pdf";
 
-  // Navigation component integrated directly
+  // Navigation component otimizado
   const renderNav = useCallback(
     (className = "", isMobileNav = false) => {
-      const navContainerClasses = `flex flex-col ${
-        isMobileNav ? "w-full items-center space-y-6" : "items-end space-y-8"
+      const navContainerClasses = `flex ${
+        isMobileNav 
+          ? "flex-col w-full items-center space-y-4 sm:space-y-6" 
+          : "flex-col items-end space-y-6 xl:space-y-8"
       }`;
 
       return (
@@ -114,13 +147,19 @@ const Header: React.FC = () => {
                   handleNavClick(`#${item.section}`);
                 }}
                 onKeyDown={(e) => handleKeyDown(e, `#${item.section}`)}
-                className={`py-3 px-4 text-base font-mono transition-all duration-300 outline-offset-4 focus:outline-[var(--color-accent)] focus:bg-[var(--color-accent-transparent)] rounded-md ${
-                  isMobileNav ? "w-full text-center" : ""
-                } ${
-                  activeSection === item.section
-                    ? "text-[var(--color-accent)] bg-[var(--color-accent-transparent)]"
-                    : "text-[var(--color-light-100)] hover:text-[var(--color-accent)] hover:bg-[var(--color-accent-transparent)]"
-                }`}
+                className={`
+                  py-2 px-4 sm:py-3 sm:px-4 
+                  text-sm sm:text-base 
+                  font-mono transition-all duration-300 
+                  outline-offset-4 focus:outline-[var(--color-accent)] 
+                  focus:bg-[var(--color-accent-transparent)] rounded-md
+                  ${isMobileNav ? "w-full max-w-xs text-center" : ""}
+                  ${
+                    activeSection === item.section
+                      ? "text-[var(--color-accent)] bg-[var(--color-accent-transparent)]"
+                      : "text-[var(--color-light-100)] hover:text-[var(--color-accent)] hover:bg-[var(--color-accent-transparent)]"
+                  }
+                `}
                 aria-current={
                   activeSection === item.section ? "page" : undefined
                 }
@@ -130,13 +169,23 @@ const Header: React.FC = () => {
                 {item.name}
               </a>
             ))}
+
+            {/* Botão Currículo */}
             <a
               href={resumeLink}
               target="_blank"
               rel="noopener noreferrer"
-              className={`border border-[var(--color-accent)] text-[var(--color-accent)] rounded-md px-6 py-3 text-base font-mono hover:bg-[var(--color-accent-transparent)] transition-all duration-300 focus:outline-[var(--color-accent)] focus:bg-[var(--color-accent-transparent)] outline-offset-2 ${
-                isMobileNav ? "w-full text-center" : ""
-              }`}
+              className={`
+                border border-[var(--color-accent)] text-[var(--color-accent)] 
+                rounded-md px-4 py-2 sm:px-6 sm:py-3 
+                text-sm sm:text-base font-mono 
+                hover:bg-[var(--color-accent-transparent)] 
+                transition-all duration-300 
+                focus:outline-[var(--color-accent)] 
+                focus:bg-[var(--color-accent-transparent)] 
+                outline-offset-2
+                ${isMobileNav ? "w-full max-w-xs text-center" : ""}
+              `}
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick(resumeLink);
@@ -158,29 +207,44 @@ const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`fixed top-0 right-0 z-50 py-6 px-4 transition-all duration-300 ${
-          scrolled || isMenuOpen
-            ? "bg-[var(--bg-primary)]/95 backdrop-blur"
-            : "bg-transparent"
-        }`}
+        className={`
+          fixed top-0 right-0 z-50 
+          py-4 px-3 sm:py-6 sm:px-4 
+          transition-all duration-300 
+          ${
+            scrolled || isMenuOpen
+              ? "bg-[var(--bg-primary)]/95 backdrop-blur-sm"
+              : "bg-transparent"
+          }
+        `}
       >
-        <div className="flex flex-col items-end pt-24">
-          <div className="absolute top-6 right-4">
+        <div className="flex flex-col items-end pt-16 sm:pt-20 lg:pt-24">
+          {/* Theme Toggle */}
+          <div className="absolute top-4 right-3 sm:top-6 sm:right-4">
             <ThemeToggle isVertical={isMobile} />
           </div>
 
+          {/* Desktop Navigation */}
           {renderNav("hidden lg:flex")}
 
+          {/* Mobile Menu Button */}
           <button
-            className="lg:hidden absolute top-6 right-14 text-[var(--color-light-100)] p-2 hover:text-[var(--color-accent)] transition-colors z-60"
+            className="
+              lg:hidden absolute 
+              top-4 right-12 sm:top-6 sm:right-14 
+              text-[var(--color-light-100)] 
+              p-2 hover:text-[var(--color-accent)] 
+              transition-colors z-60
+              rounded-md focus:outline-[var(--color-accent)]
+            "
             onClick={toggleMenu}
-            aria-label="Menu"
+            aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`h-6 w-6 transition-transform duration-300 ${
+              className={`h-5 w-5 sm:h-6 sm:w-6 transition-transform duration-300 ${
                 isMenuOpen ? "rotate-90" : "rotate-0"
               }`}
               fill="none"
@@ -209,11 +273,16 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-all duration-300 ease-in-out ${
-          isMenuOpen 
-            ? "opacity-100 pointer-events-auto" 
-            : "opacity-0 pointer-events-none"
-        }`}
+        className={`
+          lg:hidden fixed inset-0 
+          bg-black/50 backdrop-blur-sm z-40 
+          transition-all duration-300 ease-in-out 
+          ${
+            isMenuOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          }
+        `}
         onClick={closeMenu}
         aria-hidden="true"
       />
@@ -221,24 +290,37 @@ const Header: React.FC = () => {
       {/* Mobile Menu */}
       <div
         id="mobile-menu"
-        className={`lg:hidden fixed top-0 left-0 w-full h-screen bg-[var(--bg-primary)] z-50 pt-24 px-6 transform transition-all duration-500 ease-out ${
-          isMenuOpen 
-            ? "translate-y-0 opacity-100" 
-            : "-translate-y-full opacity-0"
-        }`}
+        className={`
+          lg:hidden fixed top-0 left-0 w-full h-screen 
+          bg-[var(--bg-primary)] z-50 
+          pt-20 sm:pt-24 px-4 sm:px-6 
+          transform transition-all duration-500 ease-out 
+          ${
+            isMenuOpen
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-full opacity-0"
+          }
+        `}
         style={{
           pointerEvents: isMenuOpen ? "auto" : "none",
         }}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full pb-16 sm:pb-20 overflow-y-auto">
+          {/* Close Button */}
           <button
-            className="absolute top-6 right-6 text-[var(--color-light-100)] hover:text-[var(--color-accent)] transition-colors p-2 z-60"
+            className="
+              absolute top-4 right-4 sm:top-6 sm:right-6 
+              text-[var(--color-light-100)] 
+              hover:text-[var(--color-accent)] 
+              transition-colors p-2 z-60
+              rounded-md focus:outline-[var(--color-accent)]
+            "
             onClick={closeMenu}
             aria-label="Fechar menu"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8"
+              className="h-6 w-6 sm:h-8 sm:w-8"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -251,8 +333,9 @@ const Header: React.FC = () => {
               />
             </svg>
           </button>
-          
-          <div className="flex items-start justify-center pt-16">
+
+          {/* Mobile Navigation */}
+          <div className="flex items-start justify-center pt-12 sm:pt-16">
             {renderNav("w-full", true)}
           </div>
         </div>
